@@ -119,6 +119,15 @@ template Segment(nWindows) {
 
     // Convert the base to montgomery
 
+    /* check should be redundant, since
+     * E2M performs the same check
+     * on the same input
+     */
+     component isZ2 = IsZero();
+     //check first input to E2M is non-zero
+     isZ2.in <== base[0];
+     isZ2.out === 0;
+
     component e2m = Edwards2Montgomery();
     e2m.in[0] <== base[0];
     e2m.in[1] <== base[1];

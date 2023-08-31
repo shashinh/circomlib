@@ -27,9 +27,19 @@
  */
  pragma circom 2.0.0;
 
+include "comparators.circom";
+
 template Edwards2Montgomery() {
     signal input in[2];
     signal output out[2];
+
+    /* a necessary check to ensure
+     * that first public input
+     * is non-zero
+     */
+    component isZ1 = IsZero();
+    isZ1.in <== in[0];
+    isZ1.out === 0;
 
     out[0] <-- (1 + in[1]) / (1 - in[1]);
     out[1] <-- out[0] / in[0];
